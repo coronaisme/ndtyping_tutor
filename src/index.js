@@ -1,9 +1,55 @@
 document.addEventListener("DOMContentLoaded", function() {
   //add functionality upon load
   getUsername()
-  
+  listenForSignUp()
+  listenForLogin()
   
 })
+
+function listenForSignUp() {
+  const signupBtn = document.getElementById('signup-btn')
+  let userInput = document.getElementsByClassName('form-control')[0]
+  let userInputVal = userInput.value
+  signupBtn.addEventListener('click', function(event){
+    console.log(event.target)
+    fetch('https://localhost:3000/players', {
+      method: "POST", 
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        name: userInputVal
+      })
+    }).then(res => res.json())
+    .then(data => 
+      console.log(data))
+  })
+}
+
+function listenForLogin() {
+  const loginBtn = document.getElementById('login-btn')
+  let userInput = document.getElementsByClassName('form-control')[0]
+  let userInputVal = userInput.value
+
+  loginBtn.addEventListener('click', function(event) {
+    fetch('http://localhost:3000/players')
+    .then(res => res.json())
+    .then(data => data.forEach(obj => {
+      if(obj.name === userInput.value){
+        console.log(obj)
+      }
+      else {
+        
+      }
+    }))
+  })
+}
+
+// function search(nameKey, myArray){
+//   myArray.forEach(obj => {
+//     if(obj.name === nameKey) {
+//       return obj
+//     }
+//   })
+// }
 
 
 function getUsername() {
@@ -14,8 +60,6 @@ function getUsername() {
   userSubmit.addEventListener("click", function(event) {
     event.preventDefault() 
     
-    
-    renderGamePage()
     //once logged in, remember username, and render new HTML for actual game page
   })
 }
