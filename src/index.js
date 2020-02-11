@@ -1,6 +1,8 @@
+
 document.addEventListener("DOMContentLoaded", function() {
   //add functionality upon load
   getUsername()
+  
 })
 
 
@@ -18,7 +20,7 @@ function getUsername() {
 
 function renderGamePage() {
   const mainContainer = document.getElementsByClassName('container')[0]
-  console.log(mainContainer)
+  // console.log(mainContainer)
   mainContainer.innerHTML = `
   <div class="title" <h1>ndTypingTutor</h1></div>
   <div class="sidebar" id="sidebar">
@@ -33,7 +35,8 @@ function renderGamePage() {
     </div>
   </div>
   <div class="game-body" id="game-body">
-         
+         <ul class "game-ul" id="game-ul">
+         </ul>
   </div> 
     <div class="bottom-bar" id="bot-bar"> 
 
@@ -51,5 +54,23 @@ function renderGamePage() {
 //bottom div will hold the currently lowest word in the main container 
 //if bottom div word typed correctly matches the word lowest, then word goes away and score is increased
   
-
+listenForStartButton()
 }
+
+function listenForStartButton(){
+  const startButton = document.getElementById('start-btn');
+  startButton.addEventListener('click', function(event){
+    fetch('http://localhost:3000/words').then(resp => resp.json()).then(words => displayTheWords(words))
+  })
+}
+
+function displayTheWords(words){
+  const gameBodyUl = document.getElementById('game-ul')
+  setInterval(function() {
+      const wordLi = document.createElement('li')
+      wordLi.innerText = words[Math.floor(Math.random() * words.length)].title
+      gameBodyUl.appendChild(wordLi)
+  }, 2000)
+  }
+
+
