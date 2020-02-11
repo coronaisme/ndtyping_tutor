@@ -84,7 +84,9 @@ function renderGamePage(user) {
          <ul class "game-ul" id="game-ul">
          </ul>
   </div> 
-    <div class="bottom-bar" id="bot-bar"> 
+    <div class="bottom-bar" id="bot-bar">
+      <div class="word-target" id="word-target">
+      </div> 
 
   </div>  `
   
@@ -118,7 +120,12 @@ function displayTheWords(words){
       const wordLi = document.createElement('li')
       wordLi.innerText = words[Math.floor(Math.random() * words.length)].title
       gameBodyUl.appendChild(wordLi)
-  }, 2000)
+      let wordTarget = document.getElementById('word-target')
+      wordTarget.innerHTML = wordLi.innerText
+      console.log(wordLi.innerText)
+  }, 3500)
+    
+
   }
 
 
