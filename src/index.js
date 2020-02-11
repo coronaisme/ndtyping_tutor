@@ -12,16 +12,17 @@ function listenForSignUp() {
   let userInput = document.getElementsByClassName('form-control')[0]
   let userInputVal = userInput.value
   signupBtn.addEventListener('click', function(event){
+    event.preventDefault()
     console.log(event.target)
-    fetch('https://localhost:3000/players', {
+    fetch('http://localhost:3000/players', {
       method: "POST", 
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        name: userInputVal
+        name: userInput.value
       })
     }).then(res => res.json())
     .then(data => 
-      console.log(data))
+      console.log("?"))
   })
 }
 
@@ -35,10 +36,7 @@ function listenForLogin() {
     .then(res => res.json())
     .then(data => data.forEach(obj => {
       if(obj.name === userInput.value){
-        console.log(obj)
-      }
-      else {
-        
+        renderGamePage(obj)
       }
     }))
   })
@@ -66,15 +64,15 @@ function getUsername() {
 }
 
 
-function renderGamePage() {
+function renderGamePage(user) {
   const mainContainer = document.getElementsByClassName('container')[0]
   // console.log(mainContainer)
   mainContainer.innerHTML = `
   <div class="title" <h1>ndTypingTutor</h1></div>
   <div class="sidebar" id="sidebar">
-    <div class="username-tab"><p>Username</p>
+    <div class="username-tab"><p>Hello, ${user.name}</p>
     </div><br>
-      <div class="user-scores-tab" id="user-scores"><a href="#user-scores">Username's High Scores</a>
+      <div class="user-scores-tab" id="user-scores"><a href="#user-scores">${user.name}'s Scores</a>
       </div><br>
         <div class="leaderboard-tab" id="leaderboard"><a href="#leaderboard">Leaderboard</a>
         </div><br>
