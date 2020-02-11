@@ -9,11 +9,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function listenForSignUp() {
   const signupBtn = document.getElementById('signup-btn')
-  let userInput = document.getElementsByClassName('form-control')[0]
-  let userInputVal = userInput.value
-  signupBtn.addEventListener('click', function(event){
+  signupBtn.addEventListener('click', () => {
+    let userInput = document.getElementsByClassName('form-control')[0]
     event.preventDefault()
-    console.log(event.target)
     fetch('http://localhost:3000/players', {
       method: "POST", 
       headers: {'Content-Type': 'application/json'},
@@ -22,7 +20,7 @@ function listenForSignUp() {
       })
     }).then(res => res.json())
     .then(data => 
-      console.log("?"))
+      renderGamePage(data))
   })
 }
 
@@ -41,14 +39,6 @@ function listenForLogin() {
     }))
   })
 }
-
-// function search(nameKey, myArray){
-//   myArray.forEach(obj => {
-//     if(obj.name === nameKey) {
-//       return obj
-//     }
-//   })
-// }
 
 
 function getUsername() {
