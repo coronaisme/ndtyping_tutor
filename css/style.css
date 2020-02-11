@@ -82,6 +82,19 @@ color: black;
 background-color: white;
 }
 
+
+.signup_btn{
+  color: black;
+  background-color: #FFC312;
+  width: 100px;
+  align-content: center;
+  }
+  
+  .signup_btn:hover{
+  color: black;
+  background-color: white;
+  }
+
 .links{
 color: white;
 }
