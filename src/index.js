@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
   //add functionality upon load
   getUsername()
+  
+  
 })
 
 
@@ -10,15 +12,18 @@ function getUsername() {
   let userInputVal = userInput.value
   
   userSubmit.addEventListener("click", function(event) {
-    event.preventDefault()   
+    event.preventDefault() 
+    
+    
     renderGamePage()
     //once logged in, remember username, and render new HTML for actual game page
   })
 }
 
+
 function renderGamePage() {
   const mainContainer = document.getElementsByClassName('container')[0]
-  console.log(mainContainer)
+  // console.log(mainContainer)
   mainContainer.innerHTML = `
   <div class="title" <h1>ndTypingTutor</h1></div>
   <div class="sidebar" id="sidebar">
@@ -29,7 +34,7 @@ function renderGamePage() {
         <div class="leaderboard-tab" id="leaderboard"><a href="#leaderboard">Leaderboard</a>
         </div><br>
           <button class="start-button" id="start-btn">Start</button><br><br>
-            <div class="logout-tab" id="logout"><a href="#logout">Logout</a>
+            <div class="logout-tab" id="logout"><a id="logout-link" href="#logout">Logout</a>
     </div>
   </div>
   <div class="game-body" id="game-body">
@@ -38,6 +43,8 @@ function renderGamePage() {
     <div class="bottom-bar" id="bot-bar"> 
 
   </div>  `
+  
+ 
 
   //page will include a side bar with
   //username
