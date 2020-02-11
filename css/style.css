@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Numans');
 
 html,body{
-background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+/* background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg'); */
 background-size: cover;
 background-repeat: no-repeat;
 height: 100%;
@@ -88,4 +88,39 @@ color: white;
 
 .links a{
 margin-left: 4px;
+}
+
+.sidebar {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+  color: blue;
+}
+
+.logout-tab {
+  padding-top: 180%;
+}
+
+.title {
+  text-align: center;
+  text-decoration: cornflowerblue;
+  font-size: 300%;
+  padding: 30px;
+ 
+}
+
+.game-body {
+  height: 600px;
+  width: 1200px;
+}
+
+.bottom-bar {
+  height: 200px;
+  width: 1200px;
 }
