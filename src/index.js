@@ -111,8 +111,9 @@ function displayTheWords(words){
       wordLi.innerText = words[Math.floor(Math.random() * words.length)].title
       gameBodyUl.appendChild(wordLi)
       let wordTarget = document.getElementById('word-target')
+      console.log(wordTarget)
       wordTarget.innerHTML = wordLi.innerText
-      console.log(wordLi.innerText)
+      // console.log(wordLi.innerText)
   }, 3500)
     
 
