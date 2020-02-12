@@ -14,7 +14,6 @@
 
 document.addEventListener("DOMContentLoaded", function() {
 
-  // getUsername()
   listenForSignUp()
   listenForLogin()
   
@@ -44,6 +43,7 @@ function listenForLogin() {
   let userInput = document.getElementsByClassName('form-control')[0]
 
   loginBtn.addEventListener('click', function(event) {
+    event.preventDefault()
     fetch('http://localhost:3000/players')
     .then(res => res.json())
     .then(data => data.forEach(obj => {
@@ -57,14 +57,7 @@ function listenForLogin() {
 }
 
 
-// function getUsername() {
-//   const userInput = document.getElementsByClassName('form-control')[0]
-//   const userSubmit = document.getElementsByClassName('btn float-right login_btn')[0]
-  
-//   userSubmit.addEventListener("click", function(event) {
-//     event.preventDefault() 
-//   })
-// }
+
 
 //main game page new html, kinda clunky, but works
 function renderGamePage(user) {
