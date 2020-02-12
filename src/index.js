@@ -103,22 +103,18 @@ function listenForStartButton(){
 }
 
 //gets words to add to a list at interval time
+let screenWords = []
 function displayTheWords(words){
   const gameBodyUl = document.getElementById('game-ul')
     setInterval(function() {
       const wordLi = document.createElement('li')
       wordLi.innerText = words[Math.floor(Math.random() * words.length)].title
+      gameBodyUl.appendChild(wordLi)
       screenWords.push(wordLi.innerText)
       screenWords.forEach(word => {
         wordLi.innerText = word
-      })
-      
-      // console.log(screenWords)
-      gameBodyUl.appendChild(wordLi)
-      // let wordTarget = document.getElementById('word-target')
-      // console.log(wordTarget)
-      // wordTarget.innerHTML = wordLi.innerText
-      // console.log(wordLi.innerText)
+      })  
+      console.log(screenWords)
     }, 3500)
   }
   
