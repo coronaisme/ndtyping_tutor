@@ -81,7 +81,7 @@ function renderGamePage(user) {
          </ul>
   </div> 
     <div class="bottom-bar" id="bot-bar">
-     <form id="input-word">
+     <form autocomplete="off" id="input-word">
         <input id="text-input-id" type="text">
      </form>
      </div>
@@ -107,17 +107,16 @@ function listenForStartButton(){
 let screenWords = []
 function displayTheWords(words){
   const gameBodyUl = document.getElementById('game-ul')
-    setInterval(function() {
+     setInterval(function() {
       const wordLi = document.createElement('li')
+      //getting a random word obj
       let randomWord = words[Math.floor(Math.random() * words.length)]
+      //setting our created wordLi id 
       wordLi.id = randomWord.id
+      //setting our created wordLi text
       wordLi.innerText = randomWord.title
-      screenWords.push(wordLi.innerText)
-      gameBodyUl.appendChild(wordLi)
-      screenWords.forEach(word => {
-        wordLi.innerText = word
-      })
-      console.log(screenWords)
+      //append in an interval of 2.5seconds
+      gameBodyUl.appendChild(wordLi)    
     }, 2500)
   }
 
@@ -134,17 +133,21 @@ function displayTheWords(words){
   
   //taking input from user and removing a word from main body of game
   function listenForUserInput() {
+    const gameBodyUl = document.getElementById('game-ul')
     const userInput = document.getElementById('input-word')
-    // console.log(userInput)
+
     userInput.addEventListener('submit', (event) => {
       event.preventDefault()
       let inputTarget = event.target[0]
-      // console.log(inputTarget.value)
-      //logic to get rid of item that matches 
-        // our inputTarget.value from gameBodyUl
-        // if(inputTarget.value === )
-
-
+      
+      let list = gameBodyUl.children
+      let arr = [...list]
+      arr.forEach(el => {
+        if(inputTarget.value === el.innerText ){
+          console.log(el)
+          el.remove()
+        }
+      })
       inputTarget.value = ""
     })
   }
