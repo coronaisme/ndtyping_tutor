@@ -1,12 +1,26 @@
+//page will include a side bar with
+//username
+  //button linking to users past games with scores(ordered by score)
+  //button linking to the leaderboard (top ten highest scores of all users)
+  //exit button - re render main page(logout)
+
+//main container where words will be falling
+//eventlistener to catch words being typed 
+
+//bottom div will hold the currently lowest word in the main container 
+//if bottom div word typed correctly matches the word lowest, then word goes away and score is increased
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
-  //add functionality upon load
-  getUsername()
+
+  // getUsername()
   listenForSignUp()
   listenForLogin()
   
 })
 
+//if user hits sign up, makes a post, creates user
 function listenForSignUp() {
   const signupBtn = document.getElementById('signup-btn')
   signupBtn.addEventListener('click', () => {
@@ -19,21 +33,23 @@ function listenForSignUp() {
         name: userInput.value
       })
     }).then(res => res.json())
-    .then(data => 
-      renderGamePage(data))
+    .then(data => {
+      renderGamePage(data)})
   })
 }
 
+//if user hits login, makes a get, logs user in with their information
 function listenForLogin() {
   const loginBtn = document.getElementById('login-btn')
   let userInput = document.getElementsByClassName('form-control')[0]
-  let userInputVal = userInput.value
 
   loginBtn.addEventListener('click', function(event) {
     fetch('http://localhost:3000/players')
     .then(res => res.json())
     .then(data => data.forEach(obj => {
-      if(obj.name === userInput.value){
+      if(userInput.value === "") {
+        console.log("Invalid username")
+      }else if(obj.name === userInput.value){
         renderGamePage(obj)
       }
     }))
@@ -41,22 +57,19 @@ function listenForLogin() {
 }
 
 
-function getUsername() {
-  const userInput = document.getElementsByClassName('form-control')[0]
-  const userSubmit = document.getElementsByClassName('btn float-right login_btn')[0]
-  let userInputVal = userInput.value
+// function getUsername() {
+//   const userInput = document.getElementsByClassName('form-control')[0]
+//   const userSubmit = document.getElementsByClassName('btn float-right login_btn')[0]
   
-  userSubmit.addEventListener("click", function(event) {
-    event.preventDefault() 
-    
-    //once logged in, remember username, and render new HTML for actual game page
-  })
-}
+//   userSubmit.addEventListener("click", function(event) {
+//     event.preventDefault() 
+//   })
+// }
 
-
+//main game page new html, kinda clunky, but works
 function renderGamePage(user) {
   const mainContainer = document.getElementsByClassName('container')[0]
-  // console.log(mainContainer)
+
   mainContainer.innerHTML = `
   <div class="title" <h1>ndTypingTutor</h1></div>
   <div class="sidebar" id="sidebar">
@@ -75,28 +88,20 @@ function renderGamePage(user) {
          </ul>
   </div> 
     <div class="bottom-bar" id="bot-bar">
-      <div class="word-target" id="word-target">
-      </div> 
-
+     <form id="input-word">
+        <input type="text">
+     </form>
+     </div>
   </div>  `
   
  
 
-  //page will include a side bar with
-  //username
-    //button linking to users past games with scores(ordered by score)
-    //button linking to the leaderboard (top ten highest scores of all users)
-    //exit button - re render main page(logout)
-
-//main container where words will be falling
-  //eventlistener to catch words being typed 
-
-//bottom div will hold the currently lowest word in the main container 
-//if bottom div word typed correctly matches the word lowest, then word goes away and score is increased
   
 listenForStartButton()
+listenLogout()
 }
 
+//starts the interval to display words
 function listenForStartButton(){
   const startButton = document.getElementById('start-btn');
   startButton.addEventListener('click', function(event){
@@ -104,9 +109,10 @@ function listenForStartButton(){
   })
 }
 
+//gets words to add to a list at interval time
 function displayTheWords(words){
   const gameBodyUl = document.getElementById('game-ul')
-  setInterval(function() {
+    setInterval(function() {
       const wordLi = document.createElement('li')
       wordLi.innerText = words[Math.floor(Math.random() * words.length)].title
       gameBodyUl.appendChild(wordLi)
@@ -114,9 +120,16 @@ function displayTheWords(words){
       console.log(wordTarget)
       wordTarget.innerHTML = wordLi.innerText
       // console.log(wordLi.innerText)
-  }, 3500)
-    
-
+    }, 3500)
   }
-
+  
+//refreshes page lol
+  function listenLogout() {
+    const logoutBtn = document.getElementById('logout')
+    logoutBtn.addEventListener('click', function(event) {
+      if(event.target.id === 'logout-link'){
+      document.location.reload(true)
+      }
+    })
+  }
 
