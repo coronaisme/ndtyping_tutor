@@ -115,7 +115,7 @@ function displayTheWords(words){
       
       // console.log(screenWords)
       gameBodyUl.appendChild(wordLi)
-      let wordTarget = document.getElementById('word-target')
+      // let wordTarget = document.getElementById('word-target')
       // console.log(wordTarget)
       // wordTarget.innerHTML = wordLi.innerText
       // console.log(wordLi.innerText)
