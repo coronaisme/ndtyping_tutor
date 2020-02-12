@@ -107,20 +107,26 @@ function listenForStartButton(){
   })
 }
 
+const screenWords = []
+const wordLi = document.createElement('li')
+
 function displayTheWords(words){
-  const screenWords = []
   const gameBodyUl = document.getElementById('game-ul')
   setInterval(function() {
-      const wordLi = document.createElement('li')
+    const wordLi = document.createElement('li')
       wordLi.innerText = words[Math.floor(Math.random() * words.length)].title
       screenWords.push(wordLi.innerText)
-      console.log(screenWords)
+      screenWords.forEach(word => {
+        wordLi.innerText = word
+      })
+      
+      // console.log(screenWords)
       gameBodyUl.appendChild(wordLi)
       let wordTarget = document.getElementById('word-target')
-      console.log(wordTarget)
-      wordTarget.innerHTML = wordLi.innerText
+      // console.log(wordTarget)
+      // wordTarget.innerHTML = wordLi.innerText
       // console.log(wordLi.innerText)
-  }, 3500)
+  }, 1500)
     
 
   }
@@ -130,9 +136,18 @@ function displayTheWords(words){
     
     wordInput.addEventListener('submit', function(event){
       event.preventDefault()
-
-
-       console.log(event.target[0].value)
+      let wordInputValue = event.target[0].value
+      event.target[0].value = ""
+      if (wordInputValue === "a") {
+        
+        let newArr = screenWords.pop()
+        console.log(newArr)
+        wordLi.innerText = newArr
+      }
+      console.log(screenWords)
+      //if event target val === any word in screenWords(array)
+      //pop that bitch out (slice more likely)
+       console.log(wordInputValue)
     })
   }
 
