@@ -78,6 +78,7 @@ function renderGamePage(user) {
         <div class="leaderboard-tab" id="leaderboard"><a href="#leaderboard">Leaderboard</a>
         </div><br>
           <button class="start-button" id="start-btn">Start</button><br><br>
+            <div class="score" id="score">0</div>
             <div class="logout-tab" id="logout"><a id="logout-link" href="#logout">Logout</a>
     </div>
   </div>
@@ -95,23 +96,37 @@ function renderGamePage(user) {
  
 
   
-listenForStartButton()
+listenForStartButton(user)
 listenLogout()
 listenForUserInput()
 }
 
 //starts the interval to display words
-function listenForStartButton(){
+function listenForStartButton(user){
   const startButton = document.getElementById('start-btn');
   startButton.addEventListener('click', function(event){
     fetch('http://localhost:3000/words').then(resp => resp.json()).then(words => displayTheWords(words))
+    fetch('http://localhost:3000/games', {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        player_id: user.id
+      })
+    }).then(resp => resp.json()).then(data => console.log(data))
   })
 }
 
 //gets words to add to a list at interval time
-let screenWords = []
+
 function displayTheWords(words){
+  
   const gameBodyUl = document.getElementById('game-ul')
+  let list = gameBodyUl.children
+  let arr = [...list]
+  // if(arr.length < 20){
+
+  
+
      setInterval(function() {
       const wordLi = document.createElement('li')
       //getting a random word obj
@@ -123,7 +138,11 @@ function displayTheWords(words){
       wordLi.innerText = randomWord.title
       //append in an interval of 2.5seconds
       gameBodyUl.appendChild(wordLi)    
-    }, 1500)
+    }, 2500)
+  // } else {
+
+  // }
+
   }
 
   
@@ -141,18 +160,22 @@ function displayTheWords(words){
   function listenForUserInput() {
     const gameBodyUl = document.getElementById('game-ul')
     const userInput = document.getElementById('input-word')
-
+    const scoreDiv = document.getElementById('score')
     userInput.addEventListener('submit', (event) => {
       event.preventDefault()
       let inputTarget = event.target[0]
-      
+      let scoreCount = parseInt(scoreDiv.innerText)
       let list = gameBodyUl.children
       let arr = [...list]
       arr.forEach(el => {
         if(inputTarget.value === el.innerText ){
-          console.log(el)
+          console.log(event.target[0].value.length)
           el.remove()
-        }
+          scoreCount += event.target[0].value.length
+          scoreDiv.innerText = scoreCount
+          // ++scoreCount
+          // console.log(scoreCount)
+           }
       })
       inputTarget.value = ""
     })
