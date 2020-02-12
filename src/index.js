@@ -13,7 +13,7 @@ function listenForSignUp() {
   let userInputVal = userInput.value
   signupBtn.addEventListener('click', function(event){
     event.preventDefault()
-    console.log(event.target)
+    // console.log(event.target)
     fetch('http://localhost:3000/players', {
       method: "POST", 
       headers: {'Content-Type': 'application/json'},
@@ -85,7 +85,9 @@ function renderGamePage(user) {
          </ul>
   </div> 
     <div class="bottom-bar" id="bot-bar">
-      <div class="word-target" id="word-target">
+      <form id="input-word">
+        <input type="text">
+      </form>
       </div> 
 
   </div>  `
@@ -105,6 +107,7 @@ function renderGamePage(user) {
 //if bottom div word typed correctly matches the word lowest, then word goes away and score is increased
   
 listenForStartButton()
+listenForWordInput()
 }
 
 function listenForStartButton(){
@@ -115,17 +118,30 @@ function listenForStartButton(){
 }
 
 function displayTheWords(words){
+  const screenWords = []
   const gameBodyUl = document.getElementById('game-ul')
   setInterval(function() {
       const wordLi = document.createElement('li')
       wordLi.innerText = words[Math.floor(Math.random() * words.length)].title
+      screenWords.push(wordLi.innerText)
+      console.log(screenWords)
       gameBodyUl.appendChild(wordLi)
       let wordTarget = document.getElementById('word-target')
       wordTarget.innerHTML = wordLi.innerText
-      console.log(wordLi.innerText)
-  }, 3500)
+  }, 6500)
     
 
+  }
+
+  function listenForWordInput(){
+    let wordInput = document.getElementById('input-word')
+    
+    wordInput.addEventListener('submit', function(event){
+      event.preventDefault()
+
+
+       console.log(event.target[0].value)
+    })
   }
 
 
