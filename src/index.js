@@ -56,6 +56,11 @@ function listenForLogin() {
   })
 }
 
+//change speed of interval
+function selectDifficulty() {
+
+}
+
 
 
 
@@ -113,11 +118,12 @@ function displayTheWords(words){
       let randomWord = words[Math.floor(Math.random() * words.length)]
       //setting our created wordLi id 
       wordLi.id = randomWord.id
+      wordLi.value = randomWord.letter_count
       //setting our created wordLi text
       wordLi.innerText = randomWord.title
       //append in an interval of 2.5seconds
       gameBodyUl.appendChild(wordLi)    
-    }, 2500)
+    }, 1500)
   }
 
   
