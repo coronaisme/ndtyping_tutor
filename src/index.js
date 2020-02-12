@@ -82,7 +82,7 @@ function renderGamePage(user) {
   </div> 
     <div class="bottom-bar" id="bot-bar">
      <form id="input-word">
-        <input type="text">
+        <input id="text-input-id" type="text">
      </form>
      </div>
   </div>  `
@@ -92,6 +92,7 @@ function renderGamePage(user) {
   
 listenForStartButton()
 listenLogout()
+listenForUserInput()
 }
 
 //starts the interval to display words
@@ -108,23 +109,42 @@ function displayTheWords(words){
   const gameBodyUl = document.getElementById('game-ul')
     setInterval(function() {
       const wordLi = document.createElement('li')
-      wordLi.innerText = words[Math.floor(Math.random() * words.length)].title
-      gameBodyUl.appendChild(wordLi)
+      let randomWord = words[Math.floor(Math.random() * words.length)]
+      wordLi.id = randomWord.id
+      wordLi.innerText = randomWord.title
       screenWords.push(wordLi.innerText)
+      gameBodyUl.appendChild(wordLi)
       screenWords.forEach(word => {
         wordLi.innerText = word
       })
       console.log(screenWords)
-    }, 3500)
+    }, 2500)
   }
+
   
-//refreshes page lol
+  //refreshes page lol
   function listenLogout() {
     const logoutBtn = document.getElementById('logout')
     logoutBtn.addEventListener('click', function(event) {
       if(event.target.id === 'logout-link'){
-      document.location.reload(true)
+        document.location.reload(true)
       }
     })
   }
+  
+  //taking input from user and removing a word from main body of game
+  function listenForUserInput() {
+    const userInput = document.getElementById('input-word')
+    // console.log(userInput)
+    userInput.addEventListener('submit', (event) => {
+      event.preventDefault()
+      let inputTarget = event.target[0]
+      // console.log(inputTarget.value)
+      //logic to get rid of item that matches 
+        // our inputTarget.value from gameBodyUl
+        // if(inputTarget.value === )
 
+
+      inputTarget.value = ""
+    })
+  }
