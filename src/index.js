@@ -92,6 +92,7 @@ function renderGamePage(user) {
   
 listenForStartButton()
 listenLogout()
+listenForUserInput()
 }
 
 //starts the interval to display words
@@ -126,5 +127,9 @@ function displayTheWords(words){
       document.location.reload(true)
       }
     })
+  }
+
+  function listenForUserInput(){
+
   }
 
