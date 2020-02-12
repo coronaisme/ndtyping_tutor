@@ -113,7 +113,7 @@ function displayTheWords(words){
       screenWords.push(wordLi.innerText)
       screenWords.forEach(word => {
         wordLi.innerText = word
-      })  
+      })
       console.log(screenWords)
     }, 3500)
   }
