@@ -81,8 +81,8 @@ function renderGamePage(user) {
          </ul>
   </div> 
     <div class="bottom-bar" id="bot-bar">
-     <form id="input-word">
-        <input type="text">
+     <form autocomplete="off" id="input-word">
+        <input id="text-input-id" type="text">
      </form>
      </div>
   </div>  `
@@ -107,29 +107,47 @@ function listenForStartButton(){
 let screenWords = []
 function displayTheWords(words){
   const gameBodyUl = document.getElementById('game-ul')
-    setInterval(function() {
+     setInterval(function() {
       const wordLi = document.createElement('li')
-      wordLi.innerText = words[Math.floor(Math.random() * words.length)].title
-      gameBodyUl.appendChild(wordLi)
-      screenWords.push(wordLi.innerText)
-      screenWords.forEach(word => {
-        wordLi.innerText = word
-      })
-      console.log(screenWords)
-    }, 3500)
+      //getting a random word obj
+      let randomWord = words[Math.floor(Math.random() * words.length)]
+      //setting our created wordLi id 
+      wordLi.id = randomWord.id
+      //setting our created wordLi text
+      wordLi.innerText = randomWord.title
+      //append in an interval of 2.5seconds
+      gameBodyUl.appendChild(wordLi)    
+    }, 2500)
   }
+
   
-//refreshes page lol
+  //refreshes page lol
   function listenLogout() {
     const logoutBtn = document.getElementById('logout')
     logoutBtn.addEventListener('click', function(event) {
       if(event.target.id === 'logout-link'){
-      document.location.reload(true)
+        document.location.reload(true)
       }
     })
   }
+  
+  //taking input from user and removing a word from main body of game
+  function listenForUserInput() {
+    const gameBodyUl = document.getElementById('game-ul')
+    const userInput = document.getElementById('input-word')
 
-  function listenForUserInput(){
-
+    userInput.addEventListener('submit', (event) => {
+      event.preventDefault()
+      let inputTarget = event.target[0]
+      
+      let list = gameBodyUl.children
+      let arr = [...list]
+      arr.forEach(el => {
+        if(inputTarget.value === el.innerText ){
+          console.log(el)
+          el.remove()
+        }
+      })
+      inputTarget.value = ""
+    })
   }
-
