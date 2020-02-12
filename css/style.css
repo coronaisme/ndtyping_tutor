@@ -11,6 +11,14 @@ font-family: 'Numans', sans-serif;
 /* display:grid; */
 }
 
+#msg{
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding: 10px;
+  padding-left: 20px;
+}
+
+
 .container{
 height: 100%;
 align-content: center;
@@ -39,6 +47,7 @@ cursor: pointer;
 .card-header h3{
 color: white;
 align-content: center;
+padding-left: 70px;
 }
 
 .social_icon{
