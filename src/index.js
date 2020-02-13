@@ -77,7 +77,7 @@ function renderGamePage(user) {
             <div class="logout-tab" id="logout"><a id="logout-link" href="#logout">Logout</a>
     </div>
     <p>Timer: </p>
-    <div class="timer" id="timer">5</div>
+    <div class="timer" id="timer">15</div>
   </div>
   <div class="game-body" id="game-body">
          <ul class="game-ul" id="game-ul-one">
@@ -163,6 +163,7 @@ function displayTheWords(words) {
           wordLi.innerText = randomWord.title
           //append in an interval of 2.5seconds
           randomUl.appendChild(wordLi)
+          // console.log(randomUl)
           wordLi.addEventListener("animationend", function(event){
           event.target.remove();
           })
@@ -190,7 +191,7 @@ function listenLogout() {
 //taking input from user and removing a word from main body of game
 //score is incremented here
 function listenForUserInput() {
-  const gameBodyUl = document.getElementById('game-ul')
+  const gameBodyUl = document.getElementsByClassName('game-body')
   const userInput = document.getElementById('input-word')
   const scoreDiv = document.getElementById('score')
   userInput.addEventListener('submit', (event) => {
