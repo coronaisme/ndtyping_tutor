@@ -83,7 +83,7 @@ function renderGamePage(user) {
             <div class="logout-tab" id="logout"><a id="logout-link" href="#logout">Logout</a>
     </div>
     <p>Timer: </p>
-    <div class="timer" id="timer">5</div>
+    <div class="timer" id="timer">20</div>
   </div>
   <div class="game-body" id="game-body">
          <ul class "game-ul" id="game-ul">
@@ -125,7 +125,7 @@ function listenForStartButton(user) {
   
   startButton.addEventListener('click', function (event) {
     
-      setInterval(func, 1000)
+      setInterval(func, 6000)
       
       fetch('http://localhost:3000/words').then(resp => resp.json()).then(words => displayTheWords(words))
       fetch('http://localhost:3000/games', {
