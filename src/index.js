@@ -92,7 +92,7 @@ function renderGamePage(user) {
             <div class="logout-tab" id="logout"><a id="logout-link" href="#logout">Logout</a>
     </div>
     <p>Timer: </p>
-    <div class="timer" id="timer">20</div>
+    <div class="timer" id="timer">5</div>
   </div>
   <div class="game-body" id="game-body">
          <ul class "game-ul" id="game-ul">
@@ -145,7 +145,7 @@ function listenForStartButton(user) {
       }).then(resp => resp.json()).then(gameData => {
         let title = document.getElementsByClassName("title")[0]
         title.id = gameData.id
-        // console.log(gameData)
+
       })
     })
   }
@@ -154,7 +154,7 @@ function listenForStartButton(user) {
   //gets words to add to a list at interval time, stops after x seconds
   function displayTheWords(words) {
     const scoreDiv = document.getElementById('score') //dont worry about it
-    let currentUser = document.getElementsByClassName('user-scores-tab')[0]
+    currentUser = document.getElementsByClassName('user-scores-tab')[0]
     const gameBodyUl = document.getElementById('game-ul')
     // let list = gameBodyUl.children
     // let arr = [...list]
@@ -164,7 +164,7 @@ function listenForStartButton(user) {
     countDown = setInterval(function () {
       if (parseFloat(timer.innerText) > 0) {
         const wordLi = document.createElement('li')
-        // console.log(parseFloat(timer.innerText))
+      
         //getting a random word obj
         let randomWord = words[Math.floor(Math.random() * words.length)]
         //setting our created wordLi id 
@@ -231,7 +231,7 @@ function checkForZero() {
   const scoreDiv = document.getElementById('score')
   const playerId = document.getElementsByClassName('user-scores-tab')[0].id
   let title = document.getElementsByClassName('title')[0]
-
+  currentUser = document.getElementsByClassName('user-scores-tab')[0]
   fetch(`http://localhost:3000/games/${title.id}`, {
         method: "PATCH",
         headers: { 'Content-Type': 'application/json' },
@@ -239,13 +239,19 @@ function checkForZero() {
           player_id: playerId,
           score: parseInt(scoreDiv.innerText)
         })
-      }).then(resp => resp.json()).then(gameData => playerScoreContainer.push(gameData.score))
+      }).then(resp => resp.json()).then(gameData => {
+        console.log(gameData)
+        playerScoreContainer.push(gameData.score)
+
+        //call renderScorePAge here?
+        // console.log(currentUser)
+        renderScoresPage(currentUser)
+        console.log(playerScoreContainer)})
 }
 //change page to players scores
 function renderScoresPage(user) {
+  console.log(user)
   const mainContainer = document.getElementsByClassName('container')[0]
-  // console.log(mainContainer)
-  // console.log(user.innerText)
   mainContainer.innerHTML = `<div class="player-score" id="${user.id}"> ${user.innerText}:</div>
   <br>
   <ul id="scores">
@@ -263,13 +269,11 @@ function renderScoresPage(user) {
         myScoreContainer.push(game.score)
       }
     })
-    console.log(myScoreContainer)
       playerScoreContainer.forEach(score => {
       ulContainer.innerHTML += `<li>${score}</li>`
     })
+    console.log(playerScoreContainer, "in render scores func")
   })
-
-
 }
 
 
