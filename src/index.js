@@ -123,6 +123,8 @@ function displayTheWords(words){
   
 
      setInterval(function() {
+
+      list[0] ? list[list.length-1].remove() : undefined
       const wordLi = document.createElement('li')
       //getting a random word obj
       let randomWord = words[Math.floor(Math.random() * words.length)]
@@ -135,7 +137,7 @@ function displayTheWords(words){
     }, 2500)
   // } else {
 
-  // }
+  // } 
 
   }
 

@@ -166,3 +166,19 @@ margin-left: 4px;
   float:right;
   
 }
+ul {
+  list-style-type: none;
+}
+
+li {
+  width: 100px;
+  height: 25px;
+  position: relative;
+  animation-name: falling-li;
+  animation-duration: 4.5s;
+}
+
+@keyframes falling-li {
+  0%   {top:0px;}
+  100% {top:600px;}
+}
