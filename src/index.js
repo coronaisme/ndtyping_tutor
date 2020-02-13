@@ -91,7 +91,7 @@ function renderGamePage(user) {
          </div> 
          <div class="bottom-bar" id="bot-bar">
          <form autocomplete="off" id="input-word">
-         <input id="text-input-id" type="text">
+         <input id="text-input-id" type="text" placeholder="Type the falling words">
          </form>
          </div>
          </div>  `
@@ -125,7 +125,7 @@ function listenForStartButton(user) {
   
   startButton.addEventListener('click', function (event) {
     
-      setInterval(func, 6000)
+      setInterval(func, 1000)
       
       fetch('http://localhost:3000/words').then(resp => resp.json()).then(words => displayTheWords(words))
       fetch('http://localhost:3000/games', {
@@ -150,6 +150,7 @@ function listenForStartButton(user) {
     // let list = gameBodyUl.children
     // let arr = [...list]
     let timer = document.getElementById('timer')
+
     
     countDown = setInterval(function () {
       if (parseFloat(timer.innerText) > 0) {
@@ -164,6 +165,9 @@ function listenForStartButton(user) {
         wordLi.innerText = randomWord.title
         //append in an interval of 2.5seconds
         gameBodyUl.appendChild(wordLi)
+        wordLi.addEventListener("animationend", function(event){
+          event.target.remove();
+        })
       }
       else {
         //go to score page 
@@ -176,7 +180,7 @@ function listenForStartButton(user) {
         checkForZero()
         return -1;
       }
-    }, 1000)
+    }, 3000)
 }
 
 
