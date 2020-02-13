@@ -157,6 +157,7 @@ function listenForStartButton(user) {
         let randomWord = words[Math.floor(Math.random() * words.length)]
         //setting our created wordLi id 
         wordLi.id = randomWord.id
+        wordLi.className = "falling"
         wordLi.value = randomWord.letter_count
         //setting our created wordLi text
         wordLi.innerText = randomWord.title
