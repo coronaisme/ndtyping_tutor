@@ -1,5 +1,6 @@
 let countDown;
 let wordDrop;
+let playerScoreContainer = []
 //page will include a side bar with
 //username
 //button linking to users past games with scores(ordered by score)
@@ -53,9 +54,21 @@ function listenForLogin() {
         if (userInput.value === "") {
           console.log("Invalid username")
         } else if (obj.name === userInput.value) {
+          fetchPlayerGames(obj)
           renderGamePage(obj)
         }
       }))
+  })
+}
+
+
+function fetchPlayerGames(user) {
+  let ScoreContainer = []
+  fetch(`http://localhost:3000/games?user_id=${user.id}`).then(res => res.json()).then(data => {
+    ScoreContainer.push(data)
+    ScoreContainer[0].forEach(game => {
+     playerScoreContainer.push(game.score)
+    })
   })
 }
 
@@ -72,8 +85,7 @@ function renderGamePage(user) {
     </div><br>
       <div class="user-scores-tab" id="${user.id}"><a href="#user-scores">${user.name}'s Scores</a>
       </div><br>
-        <div class="leaderboard-tab" id="leaderboard"><a href="#leaderboard">Leaderboard</a>
-        </div><br>
+       <br>
           <button class="start-button" id="start-btn">Start</button><br><br>
           <p>score:</p>
             <div class="score" id="score">0</div>
@@ -88,7 +100,7 @@ function renderGamePage(user) {
          </div> 
          <div class="bottom-bar" id="bot-bar">
          <form autocomplete="off" id="input-word">
-         <input id="text-input-id" type="text">
+         <input id="text-input-id" type="text" placeholder="Type the words!">
          </form>
          </div>
          </div>  `
@@ -161,6 +173,9 @@ function listenForStartButton(user) {
         wordLi.innerText = randomWord.title
         //append in an interval of 2.5seconds
         gameBodyUl.appendChild(wordLi)
+        // wordLi.addEventListener("animationend", function(event){
+        //   event.target.remove()
+        // })
       }
       else {
         
@@ -222,13 +237,13 @@ function checkForZero() {
           player_id: playerId,
           score: parseInt(scoreDiv.innerText)
         })
-      }).then(resp => resp.json()).then(gameData => console.log(gameData))
+      }).then(resp => resp.json()).then(gameData => playerScoreContainer.push(gameData.score))
 }
 //change page to players scores
 function renderScoresPage(user) {
   const mainContainer = document.getElementsByClassName('container')[0]
   // console.log(mainContainer)
-  console.log(user.innerText)
+  // console.log(user.innerText)
   mainContainer.innerHTML = `<div class="player-score" id="${user.id}"> ${user.innerText}:</div>
   <br>
   <ul id="scores">
@@ -238,11 +253,17 @@ function renderScoresPage(user) {
   </div>
   `
   const ulContainer = document.getElementById('scores') 
+  let myScoreContainer = []
   fetch("http://localhost:3000/games").then(res => res.json()).then(data =>{
     data.forEach(game => {
       if(game.player_id === parseInt(user.id)){
-        ulContainer.innerHTML += `<li>${game.score}</li>`
+        
+        myScoreContainer.push(game.score)
       }
+    })
+    console.log(myScoreContainer)
+      playerScoreContainer.forEach(score => {
+      ulContainer.innerHTML += `<li>${score}</li>`
     })
   })
 
