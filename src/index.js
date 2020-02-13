@@ -240,17 +240,12 @@ function checkForZero() {
           score: parseInt(scoreDiv.innerText)
         })
       }).then(resp => resp.json()).then(gameData => {
-        console.log(gameData)
         playerScoreContainer.push(gameData.score)
-
-        //call renderScorePAge here?
-        // console.log(currentUser)
         renderScoresPage(currentUser)
-        console.log(playerScoreContainer)})
+        })
 }
 //change page to players scores
 function renderScoresPage(user) {
-  console.log(user)
   const mainContainer = document.getElementsByClassName('container')[0]
   mainContainer.innerHTML = `<div class="player-score" id="${user.id}"> ${user.innerText}:</div>
   <br>
@@ -272,8 +267,11 @@ function renderScoresPage(user) {
       playerScoreContainer.forEach(score => {
       ulContainer.innerHTML += `<li>${score}</li>`
     })
-    console.log(playerScoreContainer, "in render scores func")
   })
+}
+
+function reRenderGame() {
+  const playAgainButton = document.getElementById('')
 }
 
 
