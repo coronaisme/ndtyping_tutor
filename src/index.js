@@ -1,4 +1,5 @@
 let countDown;
+let wordDrop;
 //page will include a side bar with
 //username
 //button linking to users past games with scores(ordered by score)
@@ -58,10 +59,6 @@ function listenForLogin() {
   })
 }
 
-//change speed of interval
-
-
-
 
 
 //main game page new html, kinda clunky, but works
@@ -104,7 +101,7 @@ function renderGamePage(user) {
   listenForUserInput()
 }
 
-
+//timer
 function func() {
   let timer = document.getElementById('timer')
   let timerVal = parseInt(timer.innerText)
@@ -121,11 +118,10 @@ function func() {
 function listenForStartButton(user) {
   const startButton = document.getElementById('start-btn');
   let timer = document.getElementById('timer')
-  let timerVal = parseInt(timer.innerText)
   
   startButton.addEventListener('click', function (event) {
     
-      setInterval(func, 1000)
+      wordDrop = setInterval(func, 1000)
       
       fetch('http://localhost:3000/words').then(resp => resp.json()).then(words => displayTheWords(words))
       fetch('http://localhost:3000/games', {
@@ -137,7 +133,7 @@ function listenForStartButton(user) {
       }).then(resp => resp.json()).then(gameData => {
         let title = document.getElementsByClassName("title")[0]
         title.id = gameData.id
-        console.log(gameData)
+        // console.log(gameData)
       })
     })
   }
@@ -146,6 +142,7 @@ function listenForStartButton(user) {
   //gets words to add to a list at interval time, stops after x seconds
   function displayTheWords(words) {
     const scoreDiv = document.getElementById('score') //dont worry about it
+    let currentUser = document.getElementsByClassName('user-scores-tab')[0]
     const gameBodyUl = document.getElementById('game-ul')
     // let list = gameBodyUl.children
     // let arr = [...list]
@@ -170,14 +167,11 @@ function listenForStartButton(user) {
         })
       }
       else {
-        //go to score page 
-        //patch score here?
-        //at the point where the timer ends
-        //how do i get access to the scoreCount so that i can set the end scoreCount
-        //to the games new score value?
         
         clearInterval(countDown)
+        clearInterval(wordDrop)
         checkForZero()
+        renderScoresPage(currentUser)
         return -1;
       }
     }, 3000)
@@ -219,15 +213,12 @@ function listenForUserInput() {
   })
 }
 
+//update score
 function checkForZero() {
   const scoreDiv = document.getElementById('score')
-  let timer = document.getElementById('timer')
-  let timerNum = parseInt(timer.innerText)
-  console.log(parseInt(scoreDiv.innerText))
-  console.log(timer.innerText)
   const playerId = document.getElementsByClassName('user-scores-tab')[0].id
-
   let title = document.getElementsByClassName('title')[0]
+
   fetch(`http://localhost:3000/games/${title.id}`, {
         method: "PATCH",
         headers: { 'Content-Type': 'application/json' },
@@ -236,9 +227,29 @@ function checkForZero() {
           score: parseInt(scoreDiv.innerText)
         })
       }).then(resp => resp.json()).then(gameData => console.log(gameData))
+}
+//change page to players scores
+function renderScoresPage(user) {
+  const mainContainer = document.getElementsByClassName('container')[0]
+  // console.log(mainContainer)
+  console.log(user.innerText)
+  mainContainer.innerHTML = `<div class="player-score" id="${user.id}"> ${user.innerText}:</div>
+  <br>
+  <ul id="scores">
+  </ul>
+  <div class="button">
+  <input id="login-btn" type="submit" value="Play Again?" class="btn float-right login_btn">
+  </div>
+  `
+  const ulContainer = document.getElementById('scores') 
+  fetch("http://localhost:3000/games").then(res => res.json()).then(data =>{
+    data.forEach(game => {
+      if(game.player_id === parseInt(user.id)){
+        ulContainer.innerHTML += `<li>${game.score}</li>`
+      }
+    })
+  })
 
-
-  // mainContainer.innerHTML = `<h1>Your score was: ${scoreDiv.innerText}</h1>`
 
 }
 
