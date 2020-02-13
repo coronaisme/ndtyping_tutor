@@ -69,7 +69,7 @@ function renderGamePage(user) {
   const mainContainer = document.getElementsByClassName('container')[0]
 
   mainContainer.innerHTML = `
-  <div class="title" <h1>ndTypingTutor</h1></div>
+  <div class="title" id="" <h1>ndTypingTutor</h1></div>
   <div class="sidebar" id="sidebar">
     <div class="username-tab"><p>Hello, ${user.name}</p>
     </div><br>
@@ -134,7 +134,11 @@ function listenForStartButton(user) {
         body: JSON.stringify({
           player_id: user.id
         })
-      }).then(resp => resp.json()).then(gameData => console.log(gameData))
+      }).then(resp => resp.json()).then(gameData => {
+        let title = document.getElementsByClassName("title")[0]
+        title.id = gameData.id
+        console.log(gameData)
+      })
     })
   }
   
@@ -217,16 +221,17 @@ function checkForZero() {
   let timerNum = parseInt(timer.innerText)
   console.log(parseInt(scoreDiv.innerText))
   console.log(timer.innerText)
-  const gameId = document.getElementsByClassName('user-scores-tab')[0].id
-  console.log(gameId)
+  const playerId = document.getElementsByClassName('user-scores-tab')[0].id
 
-  // fetch(`http://localhost:3000/games/${gameId}`, {
-  //       method: "PATCH",
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         player_id: parseInt(scoreDiv.innerText)
-  //       })
-  //     }).then(resp => resp.json()).then(gameData => console.log(gameData))
+  let title = document.getElementsByClassName('title')[0]
+  fetch(`http://localhost:3000/games/${title.id}`, {
+        method: "PATCH",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          player_id: playerId,
+          score: parseInt(scoreDiv.innerText)
+        })
+      }).then(resp => resp.json()).then(gameData => console.log(gameData))
 
 
   // mainContainer.innerHTML = `<h1>Your score was: ${scoreDiv.innerText}</h1>`
