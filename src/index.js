@@ -77,7 +77,7 @@ function renderGamePage(user) {
             <div class="logout-tab" id="logout"><a id="logout-link" href="#logout">Logout</a>
     </div>
     <p>Timer: </p>
-    <div class="timer" id="timer">5</div>
+    <div class="timer" id="timer">15</div>
   </div>
   <div class="game-body" id="game-body">
          <ul class="game-ul" id="game-ul-one">
@@ -88,13 +88,13 @@ function renderGamePage(user) {
          </ul>
          <ul class="game-ul" id="game-ul-four">
          </ul>
-         </div> 
-         <div class="bottom-bar" id="bot-bar">
+  </div> 
+      <div class="bottom-bar" id="bot-bar">
          <form autocomplete="off" id="input-word">
          <input id="text-input-id" type="text" placeholder="Type the words!">
          </form>
-         </div>
-         </div>  `
+      </div>
+</div>  `
 
   listenForStartButton(user)
   listenLogout()
@@ -141,17 +141,14 @@ function listenForStartButton(user) {
   
   //gets words to add to a list at interval time, stops after x seconds
 function displayTheWords(words) {
-    const scoreDiv = document.getElementById('score') //dont worry about it
     currentUser = document.getElementsByClassName('user-scores-tab')[0]
-    const gameBodyUl = document.getElementById('game-ul')
-    // let list = gameBodyUl.children
-    // let arr = [...list]
     let timer = document.getElementById('timer')
       
     countDown = setInterval(function () {
         if (parseFloat(timer.innerText) > 0) {
           const gameUlArray = [...document.getElementsByClassName('game-ul')]
           const randomUl = gameUlArray[Math.floor(Math.random() * gameUlArray.length)]
+          console.log(randomUl, "random UL")
           const wordLi = document.createElement('li')
           //getting a random word obj
           let randomWord = words[Math.floor(Math.random() * words.length)]
@@ -173,7 +170,7 @@ function displayTheWords(words) {
           renderScoresPage(currentUser)
           return -1;
         }
-    }, 3000)
+    }, 1500)
 }
 
 
@@ -190,25 +187,33 @@ function listenLogout() {
 //taking input from user and removing a word from main body of game
 //score is incremented here
 function listenForUserInput() {
-  const gameBodyUl = document.getElementById('game-ul')
+  const gameBodyUl = document.getElementById('game-body')
   const userInput = document.getElementById('input-word')
   const scoreDiv = document.getElementById('score')
+
   userInput.addEventListener('submit', (event) => {
     event.preventDefault()
-    let inputTarget = event.target[0]
+
+    let inputTarget = event.target[0].value
     let scoreCount = parseInt(scoreDiv.innerText)
     let list = gameBodyUl.children
+
     let arr = [...list]
+
     arr.forEach(el => {
-      if (inputTarget.value === el.innerText) {
-        let scoreVal = event.target[0].value.length
-        el.remove()
+
+        if(el.children.length != 0){
+        if (event.target[0].value === el.children[0].innerText) {
+        let scoreVal = (event.target[0].value.length)
+          let badEl = el.querySelector('li')
+          badEl.remove()
+        
         scoreCount += scoreVal
         scoreDiv.innerText = scoreCount
-        //this is what we will patch to game score
       }
+    }
     })
-    inputTarget.value = ""
+    userInput[0].value = ""
   })
 }
 
