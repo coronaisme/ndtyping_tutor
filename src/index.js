@@ -1,25 +1,10 @@
 let countDown;
 let wordDrop;
 let playerScoreContainer = []
-//page will include a side bar with
-//username
-//button linking to users past games with scores(ordered by score)
-//button linking to the leaderboard (top ten highest scores of all users)
-//exit button - re render main page(logout)
-
-//main container where words will be falling
-//eventlistener to catch words being typed 
-
-//bottom div will hold the currently lowest word in the main container 
-//if bottom div word typed correctly matches the word lowest, then word goes away and score is increased
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
-
   listenForSignUp()
   listenForLogin()
-
 })
 
 //if user hits sign up, makes a post, creates user
@@ -95,7 +80,13 @@ function renderGamePage(user) {
     <div class="timer" id="timer">5</div>
   </div>
   <div class="game-body" id="game-body">
-         <ul class "game-ul" id="game-ul">
+         <ul class="game-ul" id="game-ul-one">
+         </ul>
+         <ul class="game-ul" id="game-ul-two">
+         </ul>
+         <ul class="game-ul" id="game-ul-three">
+         </ul>
+         <ul class="game-ul" id="game-ul-four">
          </ul>
          </div> 
          <div class="bottom-bar" id="bot-bar">
@@ -104,9 +95,6 @@ function renderGamePage(user) {
          </form>
          </div>
          </div>  `
-
-
-
 
   listenForStartButton(user)
   listenLogout()
@@ -152,41 +140,39 @@ function listenForStartButton(user) {
   
   
   //gets words to add to a list at interval time, stops after x seconds
-  function displayTheWords(words) {
+function displayTheWords(words) {
     const scoreDiv = document.getElementById('score') //dont worry about it
     currentUser = document.getElementsByClassName('user-scores-tab')[0]
     const gameBodyUl = document.getElementById('game-ul')
     // let list = gameBodyUl.children
     // let arr = [...list]
     let timer = document.getElementById('timer')
-
-    
-    countDown = setInterval(function () {
-      if (parseFloat(timer.innerText) > 0) {
-        const wordLi = document.createElement('li')
       
-        //getting a random word obj
-        let randomWord = words[Math.floor(Math.random() * words.length)]
-        //setting our created wordLi id 
-        wordLi.id = randomWord.id
-        wordLi.className = "falling"
-        wordLi.value = randomWord.letter_count
-        //setting our created wordLi text
-        wordLi.innerText = randomWord.title
-        //append in an interval of 2.5seconds
-        gameBodyUl.appendChild(wordLi)
-        wordLi.addEventListener("animationend", function(event){
+    countDown = setInterval(function () {
+        if (parseFloat(timer.innerText) > 0) {
+          const gameUlArray = [...document.getElementsByClassName('game-ul')]
+          const randomUl = gameUlArray[Math.floor(Math.random() * gameUlArray.length)]
+          const wordLi = document.createElement('li')
+          //getting a random word obj
+          let randomWord = words[Math.floor(Math.random() * words.length)]
+           //setting our created wordLi id 
+          wordLi.id = randomWord.id
+          wordLi.className = "falling"
+          wordLi.value = randomWord.letter_count
+          //setting our created wordLi text
+          wordLi.innerText = randomWord.title
+          //append in an interval of 2.5seconds
+          randomUl.appendChild(wordLi)
+          wordLi.addEventListener("animationend", function(event){
           event.target.remove();
-        })
-      }
-      else {
-        
-        clearInterval(countDown)
-        clearInterval(wordDrop)
-        checkForZero()
-        renderScoresPage(currentUser)
-        return -1;
-      }
+          })
+        } else {
+          clearInterval(countDown)
+          clearInterval(wordDrop)
+          checkForZero()
+          renderScoresPage(currentUser)
+          return -1;
+        }
     }, 3000)
 }
 
@@ -249,10 +235,10 @@ function renderScoresPage(user) {
   const mainContainer = document.getElementsByClassName('container')[0]
   mainContainer.innerHTML = `<div class="player-score" id="${user.id}"> ${user.innerText}:</div>
   <br>
-  <ul id="scores">
-  </ul>
+    <ul id="scores">
+    </ul>
   <div class="button">
-  <input id="login-btn" type="submit" value="Play Again?" class="btn float-right login_btn">
+    <input id="login-btn" type="submit" value="Play Again?" class="btn float-right login_btn">
   </div>
   `
   const ulContainer = document.getElementById('scores') 
@@ -260,7 +246,6 @@ function renderScoresPage(user) {
   fetch("http://localhost:3000/games").then(res => res.json()).then(data =>{
     data.forEach(game => {
       if(game.player_id === parseInt(user.id)){
-        
         myScoreContainer.push(game.score)
       }
     })
