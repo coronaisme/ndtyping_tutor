@@ -1,7 +1,6 @@
 /* Made with love by Mutiullah Samim*/
 
-@import url('https://fonts.googleapis.com/css?family=Numans');
-
+@import url('https://fonts.googleapis.com/css?family=Special+Elite&display=swap');
 html,body{
 /* background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg'); */
 background-size: cover;
@@ -131,6 +130,7 @@ margin-left: 4px;
   padding-left: 20px;
   color:white;
   align-content: center;
+  font-family: 'Special Elite', cursive;
 }
 
 
@@ -144,7 +144,7 @@ margin-left: 4px;
   font-size: 300%;
   padding: 10px;
   padding-left: 175px;
- 
+  font-family: 'Special Elite', cursive;
 }
 
 .game-body {
@@ -156,7 +156,7 @@ margin-left: 4px;
   grid-template-columns: repeat(4, 1fr);
   max-width: 45em;
   float:right;
-  
+  font-family: 'Special Elite', cursive;
 
 }
 
@@ -176,7 +176,8 @@ margin-left: 4px;
     position: relative;
     animation-name: falling-li;
     animation-duration: 4.5s;
-    font-size: 180%
+    font-size: 180%;
+    font-family: 'Special Elite', cursive;
   }
   @keyframes falling-li {
     0%   {top:0px;}

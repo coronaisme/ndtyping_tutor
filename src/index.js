@@ -162,6 +162,7 @@ function displayTheWords(words) {
           wordLi.innerText = randomWord.title
           //append in an interval of 2.5seconds
           randomUl.appendChild(wordLi)
+          // console.log(randomUl)
           wordLi.addEventListener("animationend", function(event){
           event.target.remove();
           })
