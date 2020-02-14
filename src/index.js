@@ -77,7 +77,7 @@ function renderGamePage(user) {
             <div class="logout-tab" id="logout"><a id="logout-link" href="#logout">Logout</a>
     </div>
     <p>Timer: </p>
-    <div class="timer" id="timer">15</div>
+    <div class="timer" id="timer">5</div>
   </div>
   <div class="game-body" id="game-body">
          <ul class="game-ul" id="game-ul-one">
@@ -138,6 +138,9 @@ function listenForStartButton(user) {
     })
   }
   
+
+
+
   
   //gets words to add to a list at interval time, stops after x seconds
 function displayTheWords(words) {
@@ -148,7 +151,6 @@ function displayTheWords(words) {
         if (parseFloat(timer.innerText) > 0) {
           const gameUlArray = [...document.getElementsByClassName('game-ul')]
           const randomUl = gameUlArray[Math.floor(Math.random() * gameUlArray.length)]
-          console.log(randomUl, "random UL")
           const wordLi = document.createElement('li')
           //getting a random word obj
           let randomWord = words[Math.floor(Math.random() * words.length)]
@@ -194,7 +196,6 @@ function listenForUserInput() {
   userInput.addEventListener('submit', (event) => {
     event.preventDefault()
 
-    let inputTarget = event.target[0].value
     let scoreCount = parseInt(scoreDiv.innerText)
     let list = gameBodyUl.children
 
@@ -243,7 +244,7 @@ function renderScoresPage(user) {
     <ul id="scores">
     </ul>
   <div class="button">
-    <input id="login-btn" type="submit" value="Play Again?" class="btn float-right login_btn">
+    <input id="play-again-btn" type="button" value="Play Again?" class="btn float-right login_btn">
   </div>
   `
   const ulContainer = document.getElementById('scores') 
@@ -258,10 +259,19 @@ function renderScoresPage(user) {
       ulContainer.innerHTML += `<li>${score}</li>`
     })
   })
+  reRenderGame()
 }
 
 function reRenderGame() {
-  const playAgainButton = document.getElementById('')
+  
+  const findUser = document.getElementsByClassName('player-score')[0].id
+  const playAgainButton = document.getElementById('play-again-btn')
+  playAgainButton.addEventListener('click', function(event){
+    if(event.target.value === "Play Again?"){
+      fetch(`http://localhost:3000/players/${findUser}`).then(res => res.json())
+      .then(data => renderGamePage(data))
+    }  
+  })
 }
 
 
