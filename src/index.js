@@ -63,13 +63,13 @@ function fetchPlayerGames(user) {
 //main game page new html, kinda clunky, but works
 function renderGamePage(user) {
   const mainContainer = document.getElementsByClassName('container')[0]
-
+  
   mainContainer.innerHTML = `
-  <div class="title" id="" <h1>ndTypingTutor</h1></div>
+  <div class="title" id="${user.id}" <h1>ndTypingTutor</h1></div>
   <div class="sidebar" id="sidebar">
     <div class="username-tab"><p>Hello, ${user.name}</p>
     </div><br>
-      <div class="user-scores-tab" id="${user.id}"><a href="#user-scores">${user.name}'s Scores</a>
+      <div class="user-scores-tab" id="${user.id}"><a id="user-scores-id" href="#user-scores">${user.name}'s Scores</a>
       </div><br>
        <br>
           <button class="start-button" id="start-btn">Start</button><br><br>
@@ -96,10 +96,24 @@ function renderGamePage(user) {
          </form>
       </div>
 </div>  `
+//pop this in the renderScores page
+let userElement = mainContainer.children[0]
 
-  listenForStartButton(user)
-  listenLogout()
-  listenForUserInput()
+
+const userScoresTab = document.getElementsByClassName('user-scores-tab')[0]
+console.log(userScoresTab)
+userScoresTab.addEventListener('click', function(event){
+  let userScoresButton = document.getElementById('user-scores-id')
+  if(event.target === userScoresButton){
+    renderScoresPage(userElement)
+  }
+})
+
+listenForStartButton(user)
+listenLogout()
+listenForUserInput()
+
+  
 }
 
 //timer
@@ -241,7 +255,7 @@ function checkForZero() {
 //change page to players scores
 function renderScoresPage(user) {
   const mainContainer = document.getElementsByClassName('container')[0]
-  mainContainer.innerHTML = `<div class="player-score" id="${user.id}"> ${user.innerText}:</div>
+  mainContainer.innerHTML = `<div class="player-score" id="${user.id}"> Your Scores:</div>
   <br>
     <ul id="scores">
     </ul>
