@@ -21,6 +21,7 @@ function listenForSignUp() {
       })
     }).then(res => res.json())
       .then(data => {
+        fetchPlayerGames(data)
         renderGamePage(data)
       })
   })
