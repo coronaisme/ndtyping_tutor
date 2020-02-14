@@ -74,11 +74,12 @@ function renderGamePage(user) {
        <br>
           <button class="start-button" id="start-btn">Start</button><br><br>
           <p>score:</p>
-            <div class="score" id="score">0</div>
+            <div class="score" id="score">0</div><br><br>
+            <p>Upon pressing start, click on the input field and get ready to type! </p>
             <div class="logout-tab" id="logout"><a id="logout-link" href="#logout">Logout</a>
-    </div>
+    </div><br>
     <p>Timer: </p>
-    <div class="timer" id="timer">5</div>
+    <div class="timer" id="timer">20</div>
   </div>
   <div class="game-body" id="game-body">
          <ul class="game-ul" id="game-ul-one">
