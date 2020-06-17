@@ -2,7 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css?family=Special+Elite&display=swap');
 html,body{
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/4/42/Looseleaf_Legal_Pad_Background.svg);
+background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/42/Looseleaf_Legal_Pad_Background.svg');
 background-size: cover;
 background-repeat: no-repeat;
 height: 100%;
@@ -135,7 +135,7 @@ margin-left: 4px;
 
 
 .logout-tab {
-  padding-top: 180%;
+  padding-top: 100%;
 }
 
 .title {
